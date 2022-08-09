@@ -15,6 +15,6 @@ namespace EntrantPinsk.Model.DatabaseModels
         [ForeignKey("EducationId")]
         public int EducationId { get; set; }
         public Education Education { get; set; }
-        public List<Specialty> Specialties { get; set; } = new();
+        public List<Direction> Directions { get; set; } = new();
     }
 }
