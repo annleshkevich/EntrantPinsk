@@ -15,9 +15,14 @@ namespace EntrantPinsk.BusinessLogic.Services.Implementations
             _db = db;
             _mapper = mapper;
         }
-        public IEnumerable<DirectionDto> Get() =>
-            _mapper.Map<List<DirectionDto>>(_db.Directions.AsNoTracking().ToList());
-        public DirectionDto Get(int id) =>
-            _mapper.Map<DirectionDto>(_db.Directions.FirstOrDefault(u => u.Id == id)!);
+        public IEnumerable<DirectionDto> Get()
+        {
+           return _mapper.Map<List<DirectionDto>>(_db.Directions.AsNoTracking().ToList());
+        }
+        public DirectionDto Get(int id)
+        {
+            return _mapper.Map<DirectionDto>(_db.Directions.FirstOrDefault(u => u.Id == id)!);
+        }
+            
     }
 }

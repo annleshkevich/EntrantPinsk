@@ -15,9 +15,13 @@ namespace EntrantPinsk.BusinessLogic.Services.Implementations
             _db = db;
             _mapper = mapper;
         }
-        public IEnumerable<SpecialtyDto> Get() =>
-            _mapper.Map<List<SpecialtyDto>>(_db.Specialties.AsNoTracking().ToList());
-        public SpecialtyDto Get(int id) =>
-            _mapper.Map<SpecialtyDto>(_db.Specialties.FirstOrDefault(u => u.Id == id)!);
+        public IEnumerable<SpecialtyDto> Get()
+        {
+            return _mapper.Map<List<SpecialtyDto>>(_db.Specialties.AsNoTracking().ToList());
+        }
+        public SpecialtyDto Get(int id)
+        {
+            return _mapper.Map<SpecialtyDto>(_db.Specialties.FirstOrDefault(u => u.Id == id)!);
+        }    
     }
 }
