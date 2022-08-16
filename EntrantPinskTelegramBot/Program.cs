@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EntrantPinsk.Common.DTOs;
 using EntrantPinsk.Common.Mapper;
 using EntrantPinsk.Model;
 using EntrantPinsk.Model.DatabaseModels;
@@ -23,11 +22,16 @@ namespace TelegramBotExperiments
         const string vocational = "Профессионально - техническое";
         const string postSecondary = "Среднее специальное";
         const string higher = "Высшее";
-        const string wantEducation = "Какое образование ты бы хотел получить?";
+        const string wantEducation = "Какое хочешь получить?";
         const string choiceOfDirection = "Выбери направление:";
         const string choiceOfSpecialty = "Выбери специальность:";
-        static string education = "";
+        const string otherDirections = "Хочу посмотреть другие направления";
+        const string otherSpecialties = "Хочу посмотреть другие специальности";
+        static Review review;
+        static Education education;
+        static Direction direction;
         static string displayEducationalInstitution = "";
+        static string messageFeedback = "";
         public static async Task HandleUpdates(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             if (update.Type == UpdateType.Message && update?.Message?.Text != null)
@@ -49,7 +53,7 @@ namespace TelegramBotExperiments
         }
         public static async Task HandleMessage(ITelegramBotClient botClient, Message message)
         {
-            if (message.Text == "/start")
+            if (message.Text == "/start" || message.Text == "Начать сначала")
             {
                 ReplyKeyboardMarkup keyboard = new(new[]
                 {
@@ -67,8 +71,8 @@ namespace TelegramBotExperiments
             {
                 ReplyKeyboardMarkup keyboard = new(new[]
                 {
-                    new KeyboardButton[] { $"Хочу {vocational}" },
-                    new KeyboardButton[] { $"Хочу {postSecondary}" }
+                    new KeyboardButton[] { $"{vocational} образование" },
+                    new KeyboardButton[] { $"{postSecondary} образование" }
                 })
                 {
                     ResizeKeyboard = true
@@ -76,16 +80,29 @@ namespace TelegramBotExperiments
                 await botClient.SendTextMessageAsync(message.Chat.Id, wantEducation, replyMarkup: keyboard);
                 return;
             }
-            if (message.Text == secondary || message.Text == vocational || message.Text == postSecondary)
+            if (message.Text == secondary)
             {
-                ReplyKeyboardMarkup keyboard = new(new KeyboardButton[] { $"Хочу {higher}" })
+                ReplyKeyboardMarkup keyboard = new(new[]
+                {
+                    new KeyboardButton[] { $"{vocational} образование" },
+                    new KeyboardButton[] { $"{postSecondary} образование" },
+                    new KeyboardButton[] { $"{higher} образование" }
+                })
                 {
                     ResizeKeyboard = true
                 };
                 await botClient.SendTextMessageAsync(message.Chat.Id, wantEducation, replyMarkup: keyboard);
                 return;
             }
-
+            if (message.Text == vocational || message.Text == postSecondary)
+            {
+                ReplyKeyboardMarkup keyboard = new(new KeyboardButton[] { $"{higher} образование"})
+                {
+                    ResizeKeyboard = true
+                };
+                await botClient.SendTextMessageAsync(message.Chat.Id, wantEducation, replyMarkup: keyboard);
+                return;
+            }
             var builder = new ConfigurationBuilder();
             builder.SetBasePath(Directory.GetCurrentDirectory());
             builder.AddJsonFile("appsettings.json");
@@ -164,45 +181,95 @@ namespace TelegramBotExperiments
                     foreach (var specialty in specialties)
                         if (specialty.Name  == selectedSpecialty.Name)
                         displayEducationalInstitution = $"\"{selectedSpecialty.Direction.EducationalInstitution.Name}\"" +
-                                $"\nТелефон: {selectedSpecialty.Direction.EducationalInstitution.Phone}" +
+                                $"\nТелефон приемной комиссии: \n{selectedSpecialty.Direction.EducationalInstitution.Phone}" +
                                 $"\nАдрес: {selectedSpecialty.Direction.EducationalInstitution.Address}" +
                                 $"\nEmail: {selectedSpecialty.Direction.EducationalInstitution.Email}" +
                                 $"\nСайт: {selectedSpecialty.Direction.EducationalInstitution.Website}";
                     return displayEducationalInstitution;
                 }
                 for (int i = 0; i < educations.Count; i++)
-                    if (message.Text == $"Хочу {educations[i].Name}")
+                    if (message.Text == $"{educations[i].Name} образование" || message.Text == otherDirections)
                     {
-                        education = educations[i].Name;
-                        await botClient.SendTextMessageAsync(message.Chat.Id, choiceOfDirection, replyMarkup: ListOfDirections(educations[i].Name));
+                        if (message.Text == $"{educations[i].Name} образование") 
+                            education = educations[i];
+                        await botClient.SendTextMessageAsync(message.Chat.Id, choiceOfDirection, replyMarkup: ListOfDirections(education.Name));
                         return;
                     }
 
                 for (int i = 0; i < directions.Count; i++)
-                    if (message.Text == directions[i].Name)
+                    if (message.Text == directions[i].Name || message.Text == otherSpecialties)
                     {
-                        await botClient.SendTextMessageAsync(message.Chat.Id, choiceOfSpecialty, replyMarkup: ListOfSpecialties(directions[i].Name, education));
+                        if (message.Text== directions[i].Name)
+                            direction = directions[i];
+                        await botClient.SendTextMessageAsync(message.Chat.Id, choiceOfSpecialty, replyMarkup: ListOfSpecialties(direction.Name, education.Name));
                         return;
                     }
                 for (int i = 0; i < specialties.Count; i++)
-                { 
                     if (message.Text == specialties[i].Name)
                     {
                         await botClient.SendTextMessageAsync(message.Chat.Id, DisplayEducationalInstitution(specialties[i]));
+                        ReplyKeyboardMarkup keyboard = new(new[]
+                        {
+                            new KeyboardButton[] { "Начать сначала" },
+                            new KeyboardButton[] { otherDirections },
+                            new KeyboardButton[] { otherSpecialties },
+                            new KeyboardButton[] { "Я нашел то, что мне нужно" }
+                        })
+                        {
+                            ResizeKeyboard = true
+                        };
+                        await botClient.SendTextMessageAsync(message.Chat.Id, $"Могу еще чем-то помочь?", replyMarkup: keyboard);
                         return;
                     }
+                if (message.Text == "Я нашел то, что мне нужно")
+                {
+                    ReplyKeyboardMarkup keyboard = new(new[]
+                    {
+                        new KeyboardButton[] { "/start" }
+                    })
+                    {
+                        ResizeKeyboard = true
+                    };
+                    await botClient.SendTextMessageAsync(message.Chat.Id, $"Рад быть полезным)", replyMarkup: keyboard);
+                    return;
+                }
+                if (message.Text == "/feedback")
+                {
+                    messageFeedback = message.Text;
+                    await botClient.SendTextMessageAsync(message.Chat.Id, $"Напиши отзыв прямо в сообщении:");
+                    return;
+                }
+                if (messageFeedback == "/feedback" && message.Text != null && message.Text != "/end" && message.Text != "/start")
+                {
+                    review = new() { Id = db.Reviews.Count() + 1, Description = message.Text };
+                    db.Reviews.Add(review);
+                    db.SaveChanges();
+                    messageFeedback = "";
+                    await botClient.SendTextMessageAsync(message.Chat.Id, $"Спасибо за обратную связь)");
+                    return;
+                }
+
+                if (message.Text == "/end")
+                {
+                    ReplyKeyboardMarkup keyboard = new(new[]
+                    {
+                        new KeyboardButton[] { "/start" }
+                    })
+                    {
+                        ResizeKeyboard = true
+                    };
+                    await botClient.SendTextMessageAsync(message.Chat.Id, $"Надеюсь, смог тебе помочь!", replyMarkup: keyboard);
+                    return;
                 }
             }
 
-            await botClient.SendTextMessageAsync(message.Chat, "Введи /start, чтобы начать");
+            await botClient.SendTextMessageAsync(message.Chat, "Я пока не знаю таких слов");
         }
-
-
         static void Main(string[] args)
         {
             
             client = new(Config.Token);
-            Console.WriteLine("Запущен бот " + client.GetMeAsync().Result.FirstName);
+            Console.WriteLine("bot is running...");
 
             var cts = new CancellationTokenSource();
             var cancellationToken = cts.Token;

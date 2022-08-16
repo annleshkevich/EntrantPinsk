@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EntrantPinsk.BusinessLogic\EntrantPinsk.BusinessLogic.csproj" />
     <ProjectReference Include="..\EntrantPinsk.Common\EntrantPinsk.Common.csproj" />
+    <ProjectReference Include="..\EntrantPinsk.Model\EntrantPinsk.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>

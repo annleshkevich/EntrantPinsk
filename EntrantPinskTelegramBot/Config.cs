@@ -4,6 +4,6 @@ namespace EntrantPinskTelegramBot
 {
     public static class Config
     {
-       public  static string Token { get; set; } = "5482203750:AAH1cFCGHZrISWFr-wMLke7qQSI39y8YlfI";
+       public  static string Token { get; set; } = "5338874352:AAGIxmp3OxEaB-Cxo7xGMJvrXeVvO_Ey3_A";
     }
 }

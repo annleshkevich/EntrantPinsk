@@ -14,6 +14,6 @@ namespace EntrantPinsk.Model
         public DbSet<EducationalInstitution> EducationalInstitutions { get; set; } = null!;
         public DbSet<Specialty> Specialties { get; set; } = null!;
         public DbSet<Direction> Directions { get; set; } = null!;
-
+        public DbSet<Review> Reviews { get; set; } = null!;
     }
 }
