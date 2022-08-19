@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 Api", "1 Api", "{81463357-B3DA-464E-9694-24C2EB20579B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 Business Logic", "2 Business Logic", "{252D5A25-FCB1-4218-A70E-CF69F08B7C5C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 Model", "3 Model", "{78689893-95D2-45C5-B34F-69D9FC994E01}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4 Common", "4 Common", "{4AB596DD-3DD3-49DF-AD26-0E4A544E39E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntrantPinsk.BusinessLogic", "EntrantPinsk.BusinessLogic\EntrantPinsk.BusinessLogic.csproj", "{BC975751-51AC-4CB6-A932-989FA5518C98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntrantPinsk.Model", "EntrantPinsk.Model\EntrantPinsk.Model.csproj", "{325DC729-B0A5-47BA-B79F-CD92EE88BDCC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntrantPinsk.Common", "EntrantPinsk.Common\EntrantPinsk.Common.csproj", "{351342E3-24A7-4277-81F4-87D916284DA5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntrantPinskTelegramBot", "EntrantPinskTelegramBot\EntrantPinskTelegramBot.csproj", "{F5575A9F-CD3A-4BC0-952E-42B4F43DEF1B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC975751-51AC-4CB6-A932-989FA5518C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC975751-51AC-4CB6-A932-989FA5518C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC975751-51AC-4CB6-A932-989FA5518C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC975751-51AC-4CB6-A932-989FA5518C98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{325DC729-B0A5-47BA-B79F-CD92EE88BDCC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{325DC729-B0A5-47BA-B79F-CD92EE88BDCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{325DC729-B0A5-47BA-B79F-CD92EE88BDCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{325DC729-B0A5-47BA-B79F-CD92EE88BDCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{351342E3-24A7-4277-81F4-87D916284DA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{351342E3-24A7-4277-81F4-87D916284DA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{351342E3-24A7-4277-81F4-87D916284DA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{351342E3-24A7-4277-81F4-87D916284DA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5575A9F-CD3A-4BC0-952E-42B4F43DEF1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5575A9F-CD3A-4BC0-952E-42B4F43DEF1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5575A9F-CD3A-4BC0-952E-42B4F43DEF1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5575A9F-CD3A-4BC0-952E-42B4F43DEF1B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BC975751-51AC-4CB6-A932-989FA5518C98} = {252D5A25-FCB1-4218-A70E-CF69F08B7C5C}
+		{325DC729-B0A5-47BA-B79F-CD92EE88BDCC} = {78689893-95D2-45C5-B34F-69D9FC994E01}
+		{351342E3-24A7-4277-81F4-87D916284DA5} = {4AB596DD-3DD3-49DF-AD26-0E4A544E39E4}
+		{F5575A9F-CD3A-4BC0-952E-42B4F43DEF1B} = {81463357-B3DA-464E-9694-24C2EB20579B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48C0ED63-A513-40AF-A095-82AE06C6AB51}
+	EndGlobalSection
+EndGlobal
